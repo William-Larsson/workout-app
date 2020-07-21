@@ -1,0 +1,112 @@
+# Jetbrains folder/ IDE
+.idea/
+*.iml
+
+
+# VSCode & Visual Studio
+.vscode/
+.vscode-test
+vs/
+.project
+.classpath
+.settings/
+
+
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+
+# Build folder
+build/
+
+
+# Java compiled class
+.class
+
+
+# Python Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+# Log files
+.log
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+
+# Maven files
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+
+# Android development
+.gradle
+/local.properties
+/captures
+.externalNativeBuild
+
+
+# Environments
+.env
+.venv
+.env.test
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+
+# Dependencies
+node_modules/
+
+
+# npm cache directory
+.npm
+
+
+# ESlint cache
+.eslintcache
+
+
+# Expo
+.expo/*
+
+
+# Sass
+.sass-cache/
+*.css.map
+*.sass.map
+*.scss.map
+
+
+# C++ native file format
+.cxx
+
+
+# Package Files 
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+
+# MacOS
+.DS_Store
