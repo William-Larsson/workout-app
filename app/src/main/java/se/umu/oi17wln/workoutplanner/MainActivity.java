@@ -27,4 +27,35 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    // TODO: this is pseudo code for the step counter:
+    /*
+     * OBS! Step sensor will count steps from the LAST BOOT. The counter does not reset
+     * until the phone is rebooted again, and cannot be resetted any other way.
+     *
+     * SensorManager = new Sensor(Step_sensor) <-- gets the step counter
+     *
+     * implement sensorEventListener <-- do this wherever you want to init this, probably in a server that is always runnging
+     *                                   onSensorChanged --> increment the number of steps in SharedPrefs or Database.
+     *                                   Every hit of onSensorChanged is a quaranteed step, no duplicates.
+     *
+     * place the above code in a Service (probably)
+     * start the service on entering an activity of your choice for use in updating the UI of that Activity
+     *
+     *
+     * Most reliable implementation on Github --> j4velin/Pedomenter
+     *
+     * in Manifest.xml:
+     *
+     * <uses-feature
+     *      android:name:"android.hardware.sensor.stepcounter"
+     *      android:required="true"/>
+     *
+     * <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"
+     *
+     * This makes the sensor required. Maybe this isn't the best fit for my app?
+     * RECEIVE_BOOT_COMPLETED let the service that right after boot, even if the app isn't launched.
+     *
+     *
+     *
+     */
 }
