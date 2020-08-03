@@ -3,4 +3,9 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="value_unknown">--</string>
+    <string name="kilogram_short">kg</string>
+    <string name="centimeter_short">cm</string>
+    <string name="age_short">y/o</string>
+    <string name="gender_short">gender</string>
 </resources>

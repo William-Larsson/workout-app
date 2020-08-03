@@ -1,4 +1,4 @@
-package se.umu.oi17wln.workoutplanner.model;
+package se.umu.oi17wln.workoutplanner.model.person;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -12,6 +12,8 @@ import java.util.List;
  * "Data access object"-class used to access the Room database data
  * for the Person-table. Class in an interface to allow for
  * abstract access to the application database.
+ *
+ * Author: William Larsson
  */
 @Dao
 public interface PersonDao {
@@ -52,8 +54,7 @@ public interface PersonDao {
      * @return = all database entries.
      */
     @Query("SELECT * FROM Tbl_Person ORDER BY id DESC")
-    List<PersonEntity> getAll();
-    // TODO: replace with LiveData<List<PersonEntity>> getall(); for live data updates!
+    LiveData<List<PersonEntity>> getAll();
 
 
     /**
@@ -61,6 +62,6 @@ public interface PersonDao {
      * @return = the latest entry.
      */
     @Query("SELECT * FROM Tbl_Person ORDER BY id DESC LIMIT 1")
-    PersonEntity getLatestEntry();
+    LiveData<PersonEntity> getLatestEntry();
 
 }

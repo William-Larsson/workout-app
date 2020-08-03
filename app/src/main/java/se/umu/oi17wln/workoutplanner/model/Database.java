@@ -4,12 +4,22 @@ import android.content.Context;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import se.umu.oi17wln.workoutplanner.model.person.PersonDao;
+import se.umu.oi17wln.workoutplanner.model.person.PersonEntity;
+
+/**
+ * Singleton database class that holds all
+ * database tables and references to their
+ * respective DAO-class for query operations.
+ *
+ *  Author: William Larsson
+ */
 @androidx.room.Database(entities = {PersonEntity.class}, version = 1)
 public abstract class Database extends RoomDatabase {
 
     /*
      * Singleton instance is written directly to main
-     * memory for thread visibility to avoid errors.
+     * memory to avoid thread memory cache errors.
      */
     private static volatile Database dbInstance;
 
@@ -32,9 +42,8 @@ public abstract class Database extends RoomDatabase {
 
 
     /**
-     * Used to access the DAO operations
+     * Used to get access the DAO operations
      * @return = PersonDAO
      */
     public abstract PersonDao getPersonDao();
-
 }

@@ -10,12 +10,25 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+/**
+ * Main Activity for hosting the bottom navigation bar,
+ * as well as the main content fragments.
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setUpBottomNavigation();
+    }
+
+
+    /**
+     * Adds  Bottom App Bar navigation to different fragments of the app
+     */
+    private void  setUpBottomNavigation(){
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -26,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
+
+
+
+
+
 
     // TODO: this is pseudo code for the step counter:
     /*

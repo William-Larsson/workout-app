@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="se.umu.oi17wln.workoutplanner.ui.dashboard.DashboardFragment"
+        android:name="se.umu.oi17wln.workoutplanner.ui.profile.ProfileFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 

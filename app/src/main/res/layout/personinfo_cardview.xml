@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/personInfo_cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="0dp"
+    android:elevation="2dp"
+    app:cardCornerRadius="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:id="@+id/weightValue_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/value_unknown"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/weightHeading_textView"
+            app:layout_constraintEnd_toStartOf="@+id/heightValue_textView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/heightValue_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/value_unknown"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/heightHeading_textView"
+            app:layout_constraintEnd_toStartOf="@+id/ageValue_textView"
+            app:layout_constraintStart_toEndOf="@id/weightValue_textView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ageValue_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/value_unknown"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/ageHeading_textView"
+            app:layout_constraintEnd_toStartOf="@+id/genderValue_textView"
+            app:layout_constraintStart_toEndOf="@id/heightValue_textView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/genderValue_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/value_unknown"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/genderHeading_textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ageValue_textView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/weightHeading_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/kilogram_short"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/heightValue_textView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/weightValue_textView" />
+
+        <TextView
+            android:id="@+id/heightHeading_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/centimeter_short"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ageValue_textView"
+            app:layout_constraintStart_toEndOf="@id/weightValue_textView"
+            app:layout_constraintTop_toBottomOf="@id/heightValue_textView" />
+
+        <TextView
+            android:id="@+id/ageHeading_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/age_short"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/genderValue_textView"
+            app:layout_constraintStart_toEndOf="@id/heightValue_textView"
+            app:layout_constraintTop_toBottomOf="@id/ageValue_textView" />
+
+        <TextView
+            android:id="@+id/genderHeading_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gender_short"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ageValue_textView"
+            app:layout_constraintTop_toBottomOf="@id/genderValue_textView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
