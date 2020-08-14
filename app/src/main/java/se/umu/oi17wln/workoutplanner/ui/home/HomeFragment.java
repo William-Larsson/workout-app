@@ -38,8 +38,6 @@ public class HomeFragment extends Fragment {
             Bundle savedInstanceState )
     {
         fragmentView = inflater.inflate(R.layout.fragment_home, container, false);
-
-        //TODO: Assert that requireActivity() is the correct. could be "this" or something else
         editPersonViewModel = new ViewModelProvider(requireActivity()).get(EditPersonViewModel.class);
         editPersonViewModel.getLatestPersonInfo()
                 .observe(getViewLifecycleOwner(), this::updatePersonInfoView);
@@ -83,17 +81,12 @@ public class HomeFragment extends Fragment {
      */
     private boolean startEditPersonInfoFragment(MenuItem item) {
         if (item.getItemId() == R.id.edit_personInfo) {
-            Toast.makeText(getContext(), "Edit pressed", Toast.LENGTH_SHORT).show();
-
             requireActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(((ViewGroup) requireView().getParent()).getId(),new EditPersonInfoFragment())
+                    .replace(((ViewGroup) requireView().getParent()).getId(), new EditPersonInfoFragment())
                     .addToBackStack("tag")
                     .commit();
-
-            //fragmentView.setVisibility(View.GONE);
-
             return true;
         }
         return false;
@@ -116,7 +109,6 @@ public class HomeFragment extends Fragment {
      * @param pe = PersonEntity with updated data.
      */
     private void updatePersonInfoView(PersonEntity pe){
-        //TODO: REMOVE Toast.makeText(getContext(), "onChanged PersonInfo", Toast.LENGTH_SHORT).show();
 
         if (pe != null) {
             TextView view;

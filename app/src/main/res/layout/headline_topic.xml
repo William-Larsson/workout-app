@@ -11,7 +11,7 @@
         android:id="@+id/side_view"
         android:layout_width="3dp"
         android:layout_height="22dp"
-        android:background="@color/colorAccentPrimary"
+        android:background="@color/colorAccentDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,5 +25,6 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/side_view"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/colorDarkGrey"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

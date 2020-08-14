@@ -54,20 +54,7 @@ public class DatePickerDialogFragment
      * @return = Themed DatePickerDialog
      */
     private DatePickerDialog selectConfigurationColorThemeInstance(int year, int month, int day) {
-        DatePickerDialog dialog;
-
-        int nightMode = requireContext()
-                .getResources()
-                .getConfiguration()
-                .uiMode & Configuration.UI_MODE_NIGHT_MASK;
-
-        if (nightMode == Configuration.UI_MODE_NIGHT_YES) {
-            dialog = new DatePickerDialog(requireActivity(),this, year, month, day);
-        } else {
-            dialog = new DatePickerDialog(requireActivity(), R.style.DatePickerTheme, this, year, month, day);
-        }
-
-        return dialog;
+        return new DatePickerDialog(requireActivity(),this, year, month, day);
     }
 
 

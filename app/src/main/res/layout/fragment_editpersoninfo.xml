@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<se.umu.oi17wln.workoutplanner.ui.CustomLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_editpersoninfo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
     android:orientation="vertical">
 
-    <!-- Height input field -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_background"
         android:layout_width="match_parent"
@@ -15,9 +13,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        app:cardBackgroundColor="@color/colorBackgroundDark"
-        app:cardCornerRadius="0dp"
-        >
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardCornerRadius="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,10 +29,8 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:hint="@string/height"
-                android:textColorHint="@color/colorWhite"
-                android:textCursorDrawable="@null"
                 app:boxStrokeColor="@color/colorAccentPrimary"
-                app:hintTextColor="@color/colorWhite">
+                app:errorTextColor="@color/colorAccentRed">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/user_input_height"
@@ -43,9 +38,7 @@
                     android:layout_height="match_parent"
                     android:digits="0123456789."
                     android:importantForAutofill="no"
-                    android:inputType="numberDecimal"
-                    android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorWhite" />
+                    android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -56,10 +49,8 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:hint="@string/weight"
-                android:textColorHint="@color/colorWhite"
-                android:textCursorDrawable="@null"
                 app:boxStrokeColor="@color/colorAccentPrimary"
-                app:hintTextColor="@color/colorWhite">
+                app:errorTextColor="@color/colorAccentRed">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/user_input_weight"
@@ -67,9 +58,7 @@
                     android:layout_height="match_parent"
                     android:digits="0123456789."
                     android:importantForAutofill="no"
-                    android:inputType="numberDecimal"
-                    android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorWhite" />
+                    android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -129,7 +118,7 @@
                     android:paddingBottom="16dp"
                     android:text="@string/female"
                     android:textAlignment="center"
-                    android:textColor="@color/colorBackgroundDark"
+                    android:textColor="@color/colorBackgroundStart"
                     android:textSize="18sp" />
 
             </RadioGroup>
@@ -138,4 +127,4 @@
 
     </androidx.cardview.widget.CardView>
 
-</se.umu.oi17wln.workoutplanner.ui.CustomLinearLayout>
+</LinearLayout>

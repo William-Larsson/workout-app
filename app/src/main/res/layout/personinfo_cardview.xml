@@ -15,7 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackgroundDark"
+        android:background="@color/colorBackgroundStart"
         android:paddingTop="0dp"
         android:paddingBottom="0dp">
 

@@ -6,9 +6,13 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import se.umu.oi17wln.workoutplanner.model.Util;
 
 /**
  * A table representation of a persons attributes for the
@@ -91,8 +95,7 @@ public class PersonEntity {
         Date birthDayDate = null;
 
         try {
-            // TODO: Change the pattern?
-            birthDayDate = new SimpleDateFormat("dd-MM-yyyy", Locale.US).parse(dateOfBirth);
+            birthDayDate = new SimpleDateFormat(Util.DATE_FORMAT, Locale.US).parse(dateOfBirth);
         } catch (ParseException e) {
             Log.e("ParseError",
                     "Could not parse dateOfBirth string variable. Check formatting");

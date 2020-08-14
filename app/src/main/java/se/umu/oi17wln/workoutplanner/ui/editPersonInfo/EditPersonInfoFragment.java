@@ -1,9 +1,11 @@
 package se.umu.oi17wln.workoutplanner.ui.editPersonInfo;
 
 import android.app.DatePickerDialog;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,16 +14,19 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Objects;
 import se.umu.oi17wln.workoutplanner.MainActivity;
 import se.umu.oi17wln.workoutplanner.R;
+import se.umu.oi17wln.workoutplanner.model.Util;
+import se.umu.oi17wln.workoutplanner.model.person.PersonEntity;
 
 /**
  * A fragment view for updating information about
@@ -32,7 +37,8 @@ import se.umu.oi17wln.workoutplanner.R;
  */
 public class EditPersonInfoFragment
         extends Fragment
-        implements DatePickerDialog.OnDateSetListener {
+        implements DatePickerDialog.OnDateSetListener
+{
     private View fragmentView;
     private EditPersonViewModel editPersonViewModel;
     private TextInputEditText weightInput;
@@ -55,15 +61,17 @@ public class EditPersonInfoFragment
     public View onCreateView(
             @NonNull LayoutInflater inflater,
             ViewGroup container,
-            Bundle savedInstanceState) {
+            Bundle savedInstanceState)
+    {
         fragmentView = inflater.inflate(R.layout.fragment_editpersoninfo, container, false);
         editPersonViewModel = new ViewModelProvider(
                 requireActivity()).get(EditPersonViewModel.class);
 
         ((MainActivity) requireActivity()).hideBottomNavigationView();
-
+        setHasOptionsMenu(true);
         setupViewInstances();
         setupListeners();
+        setUpActionBarClose();
 
         return fragmentView;
     }
@@ -87,22 +95,76 @@ public class EditPersonInfoFragment
      */
     private void setupListeners() {
         dateOfBirthBtn.setOnClickListener(this::showDatePicker);
-        genderInputGroup.setOnCheckedChangeListener(this::swapGenderButtonTextColor);
     }
 
 
     /**
-     * Swap the text color of the buttons
-     * @param radioGroup = not used
-     * @param i = not used
+     * Set up the top Action bar to include closing option
      */
-    private void swapGenderButtonTextColor(RadioGroup radioGroup, int i) {
-        if (maleRadioBtn.isChecked()){
-            maleRadioBtn.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
-            femaleRadioBtn.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorBackgroundDark));
+    private void setUpActionBarClose() {
+        Objects.requireNonNull(((AppCompatActivity) requireActivity())
+                .getSupportActionBar())
+                .setHomeAsUpIndicator(R.drawable.ic_close_24);
+    }
+
+
+    /**
+     * Creates the menu for saving
+     * @param menu = menu
+     * @param inflater = menu inflater
+     */
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.editpersoninfo_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    /**
+     * Called when an item in the menu has been
+     * selected by the user.
+     * @param item = item selected
+     * @return = true if successful
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.save_edited_personinfo) {
+            saveData();
+            return true;
         } else {
-            femaleRadioBtn.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
-            maleRadioBtn.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorBackgroundDark));
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    /**
+     * Saves the user input to the database if all fields are correctly
+     * filled.
+     */
+    private void saveData(){
+        String weight = Objects.requireNonNull(weightInput.getText()).toString();
+        String height = Objects.requireNonNull(heightInput.getText()).toString();
+        boolean isMale = maleRadioBtn.isChecked();
+        String dateOfBirth = dateOfBirthBtn.getText().toString();
+
+        if (dateOfBirth.contains(":")){
+            dateOfBirth = dateOfBirth.substring(dateOfBirth.indexOf(":")+1);
+        } else {
+            dateOfBirth = "";
+        }
+
+        if (weight.trim().isEmpty() || height.trim().isEmpty() || dateOfBirth.trim().isEmpty()) {
+            Toast.makeText(requireContext(), "Please fill in all fields above.", Toast.LENGTH_SHORT).show();
+        } else {
+            float w = Float.parseFloat(weight);
+            float h = Float.parseFloat(height);
+            String currentDate = new SimpleDateFormat(Util.DATE_FORMAT, Locale.US)
+                    .format(new Date());
+
+            PersonEntity dbEntry = new PersonEntity(h, w, isMale, dateOfBirth, currentDate);
+            editPersonViewModel.insert(dbEntry);
+            Toast.makeText(requireContext(), "Information saved", Toast.LENGTH_SHORT).show();
+            requireActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
         }
     }
 
@@ -135,7 +197,7 @@ public class EditPersonInfoFragment
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         */
         String strYear = Integer.toString(year);
-        String strMonth = month < 10 ? "0" + month : Integer.toString(month);
+        String strMonth = month < 10 ? "0" + (month+1) : Integer.toString(month);
         String strDay = dayOfMonth < 10 ? "0" + dayOfMonth : Integer.toString(dayOfMonth);
 
         dateOfBirthBtn.setText(new StringBuilder()
@@ -149,7 +211,7 @@ public class EditPersonInfoFragment
 
 
     /**
-     * View is soon to be destroyed. Show navigation again.
+     * View is to be destroyed. Show navigation again.
      */
     @Override
     public void onDestroyView() {
