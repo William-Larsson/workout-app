@@ -8,4 +8,11 @@
     <string name="centimeter_short">cm</string>
     <string name="age_short">y/o</string>
     <string name="gender_short">gender</string>
+    <string name="edit_information">Edit information</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="save_edited_personinfo">save_edited_personinfo</string>
 </resources>

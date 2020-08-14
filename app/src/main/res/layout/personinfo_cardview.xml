@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/personInfo_cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,13 +15,26 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp">
+        android:background="@color/colorBackgroundDark"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp">
+
+        <ImageButton
+            android:id="@+id/edit_personInfo_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@null"
+            android:contentDescription="@string/edit_information"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_more_horiz_24" />
 
         <TextView
             android:id="@+id/weightValue_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="@string/value_unknown"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@id/weightHeading_textView"
@@ -32,6 +46,7 @@
             android:id="@+id/heightValue_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="@string/value_unknown"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@id/heightHeading_textView"
@@ -43,6 +58,7 @@
             android:id="@+id/ageValue_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="@string/value_unknown"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@id/ageHeading_textView"
@@ -54,6 +70,7 @@
             android:id="@+id/genderValue_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="@string/value_unknown"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@id/genderHeading_textView"
@@ -66,6 +83,7 @@
             android:id="@+id/weightHeading_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="@string/kilogram_short"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -77,6 +95,7 @@
             android:id="@+id/heightHeading_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="@string/centimeter_short"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -88,6 +107,7 @@
             android:id="@+id/ageHeading_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="@string/age_short"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -99,6 +119,7 @@
             android:id="@+id/genderHeading_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="@string/gender_short"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"

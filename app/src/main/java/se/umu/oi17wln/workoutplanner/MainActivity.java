@@ -1,10 +1,21 @@
 package se.umu.oi17wln.workoutplanner;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -15,6 +26,7 @@ import androidx.navigation.ui.NavigationUI;
  * as well as the main content fragments.
  */
 public class MainActivity extends AppCompatActivity {
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,26 +34,69 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setUpBottomNavigation();
+        bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_SELECTED);
     }
 
 
     /**
-     * Adds  Bottom App Bar navigation to different fragments of the app
+     * Adds  Bottom App Bar navigation to different fragment-pages of the app
      */
     private void  setUpBottomNavigation(){
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        bottomNavigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
+                R.id.navigation_home,
+                R.id.navigation_dashboard,
+                R.id.navigation_notifications
+        ).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
     }
 
 
+    /**
+     * Hide the bottom navigation bar with an animation
+     */
+    public void hideBottomNavigationView(){
+        bottomNavigationView
+                .animate()
+                .translationY(bottomNavigationView.getHeight())
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        bottomNavigationView.setVisibility(View.GONE);
+                    }
+                });
+    }
 
+
+    /**
+     * Show the bottom navigation bar with an animation
+     */
+    public void showBottomNavigationView(){
+        bottomNavigationView.setVisibility(View.VISIBLE);
+        bottomNavigationView
+                .animate()
+                .translationY(0)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                    }
+                });
+    }
+
+
+    /**
+     * Get current bottom navigation bar visibility status
+     * @return = View.VISIBLE / View.GONE
+     */
+    public int getBottomNavigationViewVisibility(){
+        return bottomNavigationView.getVisibility();
+    }
 
 
 

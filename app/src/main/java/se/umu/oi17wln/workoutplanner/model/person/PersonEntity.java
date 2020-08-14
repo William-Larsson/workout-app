@@ -24,23 +24,32 @@ public class PersonEntity {
     private int id;
     private float height;
     private float weight;
+    private boolean isMale;
     private String dateOfBirth;
-    private String gender;
     // time when objects was originally saved
-    private String instantDateTime;
+    private String dateOfCreation;
 
+    /**
+     * Constructor
+     * @param height = person height
+     * @param weight = person weight
+     * @param isMale = person gender
+     * @param dateOfBirth = person date of birth
+     * @param dateOfCreation = date the sbentry was made
+     */
     public PersonEntity(
             float height,
             float weight,
+            boolean isMale,
             String dateOfBirth,
-            String gender,
-            String instantDateTime){
+            String dateOfCreation){
         this.height = height;
         this.weight = weight;
         this.dateOfBirth = dateOfBirth;
-        this.gender = gender;
-        this.instantDateTime = instantDateTime;
+        this.isMale = isMale;
+        this.dateOfCreation = dateOfCreation;
     }
+
 
     public void setId(int id) {
         this.id = id;
@@ -62,13 +71,14 @@ public class PersonEntity {
         return dateOfBirth;
     }
 
-    public String getGender() {
-        return gender;
+    public boolean isMale() {
+        return isMale;
     }
 
-    public String getInstantDateTime(){
-        return instantDateTime;
+    public String getDateOfCreation(){
+        return dateOfCreation;
     }
+
 
     /**
      * Get the age as a number instead of as a date formatted String.
@@ -101,14 +111,21 @@ public class PersonEntity {
         return age;
     }
 
+
+    /**
+     * Equals method for testing.
+     * @param obj = Person Entity to test against
+     * @return = true is same values, else false
+     */
     @Override
     public boolean equals(@Nullable Object obj) {
         if (obj instanceof PersonEntity) {
             PersonEntity instance = (PersonEntity) obj;
             if (instance.getHeight() == height &&
                     instance.getWeight() == weight &&
+                    instance.isMale == isMale &&
                     instance.getDateOfBirth().equals(dateOfBirth) &&
-                    instance.getInstantDateTime().equals(instantDateTime)
+                    instance.getDateOfCreation().equals(dateOfCreation)
             ) {
                 return true;
             }
