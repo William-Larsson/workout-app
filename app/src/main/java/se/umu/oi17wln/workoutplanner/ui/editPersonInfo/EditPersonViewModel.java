@@ -21,9 +21,6 @@ public class EditPersonViewModel extends AndroidViewModel {
         super(app);
         repo = new PersonRepository(app);
         personInfo = repo.getLatestPersonEntry();
-
-        //TODO: remove this later:
-        Toast.makeText(app, "ViewModelCreated", Toast.LENGTH_SHORT).show();
     }
 
     // TODO: change the following method names to something more appropriate?

@@ -68,19 +68,47 @@ public class EditPersonInfoFragment
     public View onCreateView(
             @NonNull LayoutInflater inflater,
             ViewGroup container,
-            Bundle savedInstanceState)
-    {
+            Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.fragment_editpersoninfo, container, false);
+
         editPersonViewModel = new ViewModelProvider(
                 requireActivity()).get(EditPersonViewModel.class);
+
+        if (savedInstanceState == null) {
+            editPersonViewModel.getLatestPersonInfo()
+                    .observe(getViewLifecycleOwner(), this::setupPreviousInfo);
+
+        }
 
         ((MainActivity) requireActivity()).hideBottomNavigationView();
         setHasOptionsMenu(true);
         setupViewInstances();
         setupListeners();
-        setUpActionBarClose();
 
         return fragmentView;
+    }
+
+
+    /**
+     * Sets the input fields to match previously given data
+     * @param personEntity = the data
+     */
+    private void setupPreviousInfo(PersonEntity personEntity) {
+
+        if (personEntity != null) {
+            weightInput.setText(String.format(Locale.US, Float.toString(personEntity.getWeight())));
+            heightInput.setText(String.format(Locale.US, Float.toString(personEntity.getHeight())));
+            maleRadioBtn.setChecked(personEntity.isMale());
+            String date = personEntity.getDateOfBirth();
+
+            if (date != null && !date.trim().isEmpty()){
+                dateOfBirthBtn.setText(new StringBuilder()
+                        .append(getResources().getString(R.string.date_of_birth))
+                        .append(": ")
+                        .append(date).toString()
+                );
+            }
+        }
     }
 
 
@@ -95,7 +123,6 @@ public class EditPersonInfoFragment
         outState.putString(TAG_HEIGHT, Objects.requireNonNull(heightInput.getText()).toString());
         outState.putBoolean(TAG_IS_MALE, maleRadioBtn.isChecked());
         outState.putString(TAG_DATE, getDateOfBirthAsString());
-        Log.d("TAG1", "saved state EDitp");
     }
 
 
@@ -124,6 +151,7 @@ public class EditPersonInfoFragment
         }
     }
 
+    
     /**
      * Set up references to all relevant UI components
      */
@@ -142,16 +170,6 @@ public class EditPersonInfoFragment
      */
     private void setupListeners() {
         dateOfBirthBtn.setOnClickListener(this::showDatePicker);
-    }
-
-
-    /**
-     * Set up the top Action bar to include closing option
-     */
-    private void setUpActionBarClose() {
-        Objects.requireNonNull(((AppCompatActivity) requireActivity())
-                .getSupportActionBar())
-                .setHomeAsUpIndicator(R.drawable.ic_close_24);
     }
 
 
@@ -195,17 +213,21 @@ public class EditPersonInfoFragment
         String dateOfBirth = getDateOfBirthAsString();
 
         if (weight.trim().isEmpty() || height.trim().isEmpty() || dateOfBirth.trim().isEmpty()) {
-            Toast.makeText(requireContext(), "Please fill in all fields above.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    requireContext(),
+                    "Please fill in all fields above",
+                    Toast.LENGTH_SHORT
+            ).show();
         } else {
             float w = Float.parseFloat(weight);
             float h = Float.parseFloat(height);
+
             String currentDate = new SimpleDateFormat(Util.DATE_FORMAT, Locale.US)
                     .format(new Date());
-
             PersonEntity dbEntry = new PersonEntity(h, w, isMale, dateOfBirth, currentDate);
             editPersonViewModel.insert(dbEntry);
-            Toast.makeText(requireContext(), "Information saved", Toast.LENGTH_SHORT).show();
-            requireActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+
+            requireActivity().getSupportFragmentManager().popBackStack();
         }
     }
 

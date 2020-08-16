@@ -9,12 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import java.util.Locale;
-
 import se.umu.oi17wln.workoutplanner.MainActivity;
 import se.umu.oi17wln.workoutplanner.R;
 import se.umu.oi17wln.workoutplanner.model.person.PersonEntity;
@@ -67,7 +65,6 @@ public class HomeFragment extends Fragment {
      * @param view = view where interaction happened.
      */
     private void showPopupMenu(View view) {
-        Toast.makeText(getContext(), "Menu pressed", Toast.LENGTH_SHORT).show();
         PopupMenu popup = new PopupMenu(view.getContext(), view);
         MenuInflater menuInflater = popup.getMenuInflater();
         menuInflater.inflate(R.menu.personinfo_cardview_menu, popup.getMenu());
@@ -105,7 +102,7 @@ public class HomeFragment extends Fragment {
      */
     private void setupHeadlineTexts() {
         TextView view = fragmentView.findViewById(R.id.headline);
-        view.setText("Hello");
+        view.setText("About you");
     }
 
 
@@ -118,15 +115,27 @@ public class HomeFragment extends Fragment {
 
         if (pe != null) {
             TextView view;
+
             // Weight
             view = fragmentView.findViewById(R.id.weightValue_textView);
-            view.setText(String.format(Locale.US, "%.1f", pe.getWeight()));
+            String weight = String.format(Locale.US, "%.1f", pe.getWeight());
+            if (weight.endsWith(".0")) {
+                weight = weight.replace(".0", "");
+            }
+            view.setText(weight);
+
             // Height
             view = fragmentView.findViewById(R.id.heightValue_textView);
-            view.setText(String.format(Locale.US, "%.1f", pe.getHeight()));
+            String height = String.format(Locale.US, "%.2f", pe.getHeight());
+            if (height.endsWith(".00")) {
+                height = height.replace(".00", "");
+            }
+            view.setText(height);
+
             // Age
             view = fragmentView.findViewById(R.id.ageValue_textView);
             view.setText(String.format(Locale.US, "%d", pe.getAge()));
+
             // Gender
             view = fragmentView.findViewById(R.id.genderValue_textView);
             view.setText(pe.isMale() ? "Male" : "Female");

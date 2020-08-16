@@ -39,7 +39,8 @@
                     android:layout_height="match_parent"
                     android:digits="0123456789."
                     android:importantForAutofill="no"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:maxLength="5"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -59,7 +60,8 @@
                     android:layout_height="match_parent"
                     android:digits="0123456789."
                     android:importantForAutofill="no"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:maxLength="5"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
