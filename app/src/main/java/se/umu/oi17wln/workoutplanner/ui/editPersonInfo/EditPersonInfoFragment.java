@@ -2,6 +2,7 @@ package se.umu.oi17wln.workoutplanner.ui.editPersonInfo;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -39,6 +41,11 @@ public class EditPersonInfoFragment
         extends Fragment
         implements DatePickerDialog.OnDateSetListener
 {
+    public static final String TAG_WEIGHT = "INPUT_WEIGHT";
+    public static final String TAG_HEIGHT = "INPUT_HEIGHT";
+    public static final String TAG_DATE = "INPUT_DATE";
+    public static final String TAG_IS_MALE = "INPUT_GENDER";
+
     private View fragmentView;
     private EditPersonViewModel editPersonViewModel;
     private TextInputEditText weightInput;
@@ -76,6 +83,46 @@ public class EditPersonInfoFragment
         return fragmentView;
     }
 
+
+    /**
+     * Save fragment state.
+     * @param outState = the saved state.
+     */
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(TAG_WEIGHT, Objects.requireNonNull(weightInput.getText()).toString());
+        outState.putString(TAG_HEIGHT, Objects.requireNonNull(heightInput.getText()).toString());
+        outState.putBoolean(TAG_IS_MALE, maleRadioBtn.isChecked());
+        outState.putString(TAG_DATE, getDateOfBirthAsString());
+        Log.d("TAG1", "saved state EDitp");
+    }
+
+
+    /**
+     * Restore state when the underlying activity is
+     * rebuilt by the system.
+     * @param savedInstanceState = saved onStateInstanceState data
+     */
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            weightInput.setText(savedInstanceState.getString(TAG_WEIGHT));
+            heightInput.setText(savedInstanceState.getString(TAG_HEIGHT));
+            maleRadioBtn.setChecked(savedInstanceState.getBoolean(TAG_IS_MALE));
+            String date = savedInstanceState.getString(TAG_DATE);
+
+            if (date != null && !date.trim().isEmpty()){
+                dateOfBirthBtn.setText(new StringBuilder()
+                        .append(getResources().getString(R.string.date_of_birth))
+                        .append(": ")
+                        .append(savedInstanceState.getString(TAG_DATE)).toString()
+                );
+            }
+        }
+    }
 
     /**
      * Set up references to all relevant UI components
@@ -145,13 +192,7 @@ public class EditPersonInfoFragment
         String weight = Objects.requireNonNull(weightInput.getText()).toString();
         String height = Objects.requireNonNull(heightInput.getText()).toString();
         boolean isMale = maleRadioBtn.isChecked();
-        String dateOfBirth = dateOfBirthBtn.getText().toString();
-
-        if (dateOfBirth.contains(":")){
-            dateOfBirth = dateOfBirth.substring(dateOfBirth.indexOf(":")+1);
-        } else {
-            dateOfBirth = "";
-        }
+        String dateOfBirth = getDateOfBirthAsString();
 
         if (weight.trim().isEmpty() || height.trim().isEmpty() || dateOfBirth.trim().isEmpty()) {
             Toast.makeText(requireContext(), "Please fill in all fields above.", Toast.LENGTH_SHORT).show();
@@ -166,6 +207,24 @@ public class EditPersonInfoFragment
             Toast.makeText(requireContext(), "Information saved", Toast.LENGTH_SHORT).show();
             requireActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
         }
+    }
+
+
+    /**
+     * Extracts the date of birth date from the button string.
+     * return an empty string if nothing is set
+     * @return = the date of birth
+     */
+    private String getDateOfBirthAsString(){
+        String dateOfBirth = dateOfBirthBtn.getText().toString();
+
+        if (dateOfBirth.contains(":")){
+            dateOfBirth = dateOfBirth.substring(dateOfBirth.indexOf(":")+1);
+        } else {
+            dateOfBirth = "";
+        }
+
+        return dateOfBirth;
     }
 
 
@@ -190,12 +249,6 @@ public class EditPersonInfoFragment
      */
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        /*
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        */
         String strYear = Integer.toString(year);
         String strMonth = month < 10 ? "0" + (month+1) : Integer.toString(month);
         String strDay = dayOfMonth < 10 ? "0" + dayOfMonth : Integer.toString(dayOfMonth);
@@ -220,4 +273,5 @@ public class EditPersonInfoFragment
             ((MainActivity) requireActivity()).showBottomNavigationView();
         }
     }
+
 }

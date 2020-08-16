@@ -3,23 +3,27 @@ package se.umu.oi17wln.workoutplanner;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.Fragment;
+
+import java.util.Objects;
+
+import se.umu.oi17wln.workoutplanner.ui.home.HomeFragment;
+import se.umu.oi17wln.workoutplanner.ui.notifications.NotificationsFragment;
+import se.umu.oi17wln.workoutplanner.ui.profile.ProfileFragment;
 
 /**
  * Main Activity for hosting the bottom navigation bar,
  * as well as the main content fragments.
  */
 public class MainActivity extends AppCompatActivity {
+    public static final String TAG_EDIT_PERSON_INFO = "se.umu.oi17wln.EDIT_PERSON_INFO";
     BottomNavigationView bottomNavigationView;
 
     @Override
@@ -29,6 +33,38 @@ public class MainActivity extends AppCompatActivity {
 
         setUpBottomNavigation();
         bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_SELECTED);
+
+        if (savedInstanceState != null){
+            //restoreFragmentState(savedInstanceState);
+        } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new HomeFragment())
+                    .commit();
+        }
+
+    }
+
+
+    private void restoreFragmentState(Bundle savedInstanceState){
+        if (savedInstanceState != null) {
+            Fragment visibleFragment;
+
+            visibleFragment = getSupportFragmentManager().findFragmentByTag(TAG_EDIT_PERSON_INFO);
+            if (visibleFragment != null) {
+                Log.d("TAG1", "activity state fragment not null");
+                startRestoredFragment(visibleFragment);
+                return;
+            }
+        }
+    }
+
+    private void startRestoredFragment(Fragment visibleFragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_container, visibleFragment)
+                .addToBackStack("EditPersonInfoBackStack")
+                .commit();
     }
 
 
@@ -36,18 +72,29 @@ public class MainActivity extends AppCompatActivity {
      * Adds  Bottom App Bar navigation to different fragment-pages of the app
      */
     private void  setUpBottomNavigation(){
-        bottomNavigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home,
-                R.id.navigation_dashboard,
-                R.id.navigation_notifications
-        ).build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(bottomNavigationView, navController);
-        bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite));
+        bottomNavigationView = findViewById(R.id.bottom_nav_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener((menuItem) -> {
+            Fragment selectedFragment = null;
+
+            switch (menuItem.getItemId()){
+                case R.id.navigation_home:
+                    selectedFragment = new HomeFragment();
+                    break;
+                case R.id.navigation_notifications:
+                    selectedFragment = new NotificationsFragment();
+                    break;
+                case R.id.navigation_profile:
+                    selectedFragment = new ProfileFragment();
+                    break;
+            }
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, Objects.requireNonNull(selectedFragment))
+                    .commit();
+
+            return true;
+        });
     }
 
 
@@ -92,6 +139,15 @@ public class MainActivity extends AppCompatActivity {
     public int getBottomNavigationViewVisibility(){
         return bottomNavigationView.getVisibility();
     }
+
+
+
+
+
+
+
+
+
 
 
 

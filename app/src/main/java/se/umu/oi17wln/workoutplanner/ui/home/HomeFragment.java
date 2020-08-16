@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import java.util.Locale;
+
+import se.umu.oi17wln.workoutplanner.MainActivity;
 import se.umu.oi17wln.workoutplanner.R;
 import se.umu.oi17wln.workoutplanner.model.person.PersonEntity;
 import se.umu.oi17wln.workoutplanner.ui.editPersonInfo.EditPersonInfoFragment;
@@ -84,8 +86,12 @@ public class HomeFragment extends Fragment {
             requireActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(((ViewGroup) requireView().getParent()).getId(), new EditPersonInfoFragment())
-                    .addToBackStack("tag")
+                    .replace(
+                            ((ViewGroup) requireView().getParent()).getId(),
+                            new EditPersonInfoFragment(),
+                            MainActivity.TAG_EDIT_PERSON_INFO
+                    )
+                    .addToBackStack("EditPersonInfoBackStack")
                     .commit();
             return true;
         }
