@@ -12,7 +12,7 @@ import android.widget.Toast;
  * directly after the device has rebooted.
  */
 public class BootReceiver extends BroadcastReceiver {
-    private static final String TAG_DEVICE_BOOT = "deviceHasBooted";
+    private static final String TAG_DEVICE_BOOT = "DEVICE_BOOT";
 
     /**
      * Start the service in the background.
