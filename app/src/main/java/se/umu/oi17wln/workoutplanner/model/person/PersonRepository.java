@@ -30,6 +30,7 @@ public class PersonRepository {
     public PersonRepository(Application app){
         Database db = Database.getInstance(app);
         dao = db.getPersonDao();
+        //LiveData
         allPersonEntries = dao.getAll();
         latestPersonEntry = dao.getLatestEntry();
     }
@@ -78,7 +79,7 @@ public class PersonRepository {
      * LiveData getter from the full list of Person-entries
      * @return = list of PersonEntity objects
      */
-    public LiveData<List<PersonEntity>> getAllPersonEntries() {
+    public LiveData<List<PersonEntity>> getAllEntries() {
         return allPersonEntries;
     }
 
@@ -87,7 +88,7 @@ public class PersonRepository {
      * LiveData getter for the latest Person-entry.
      * @return = latest PersonEntity object.
      */
-    public LiveData<PersonEntity> getLatestPersonEntry() {
+    public LiveData<PersonEntity> getLatestEntry() {
         return latestPersonEntry;
     }
 

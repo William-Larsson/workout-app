@@ -4,6 +4,8 @@ import android.content.Context;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import se.umu.oi17wln.workoutplanner.model.dailyActivity.DailyActivityDao;
+import se.umu.oi17wln.workoutplanner.model.dailyActivity.DailyActivityEntity;
 import se.umu.oi17wln.workoutplanner.model.person.PersonDao;
 import se.umu.oi17wln.workoutplanner.model.person.PersonEntity;
 
@@ -14,7 +16,7 @@ import se.umu.oi17wln.workoutplanner.model.person.PersonEntity;
  *
  *  Author: William Larsson
  */
-@androidx.room.Database(entities = {PersonEntity.class}, version = 1)
+@androidx.room.Database(entities = {PersonEntity.class, DailyActivityEntity.class}, version = 1)
 public abstract class Database extends RoomDatabase {
 
     /*
@@ -46,4 +48,11 @@ public abstract class Database extends RoomDatabase {
      * @return = PersonDAO
      */
     public abstract PersonDao getPersonDao();
+
+
+    /**
+     * Used to get access to DAO operations
+     * @return = DailyActivityDao
+     */
+    public abstract DailyActivityDao getExerciseDao();
 }

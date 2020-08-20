@@ -10,6 +10,9 @@ import android.widget.Toast;
 /**
  * A class for starting the step counter service in the background
  * directly after the device has rebooted.
+ *
+ * Author: William Larsson
+ * Course: Development of mobile applications, 5DV209
  */
 public class BootReceiver extends BroadcastReceiver {
     private static final String TAG_DEVICE_BOOT = "DEVICE_BOOT";

@@ -21,6 +21,9 @@ import se.umu.oi17wln.workoutplanner.ui.profile.ProfileFragment;
 /**
  * Main Activity for hosting the bottom navigation bar,
  * as well as the main content fragments.
+ *
+ * Author: William Larsson
+ * Course: Development of mobile applications, 5DV209
  */
 public class MainActivity extends AppCompatActivity {
     public static final String TAG_EDIT_PERSON_INFO = "se.umu.oi17wln.EDIT_PERSON_INFO";
@@ -34,37 +37,12 @@ public class MainActivity extends AppCompatActivity {
         setUpBottomNavigation();
         bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_SELECTED);
 
-        if (savedInstanceState != null){
-            //restoreFragmentState(savedInstanceState);
-        } else {
+        if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, new HomeFragment())
                     .commit();
         }
-
-    }
-
-
-    private void restoreFragmentState(Bundle savedInstanceState){
-        if (savedInstanceState != null) {
-            Fragment visibleFragment;
-
-            visibleFragment = getSupportFragmentManager().findFragmentByTag(TAG_EDIT_PERSON_INFO);
-            if (visibleFragment != null) {
-                Log.d("TAG1", "activity state fragment not null");
-                startRestoredFragment(visibleFragment);
-                return;
-            }
-        }
-    }
-
-    private void startRestoredFragment(Fragment visibleFragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.fragment_container, visibleFragment)
-                .addToBackStack("EditPersonInfoBackStack")
-                .commit();
     }
 
 

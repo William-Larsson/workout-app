@@ -1,7 +1,6 @@
 package se.umu.oi17wln.workoutplanner.ui.editPersonInfo;
 
 import android.app.Application;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -12,6 +11,9 @@ import se.umu.oi17wln.workoutplanner.model.person.PersonRepository;
 /**
  * Shared View model for updating and getting info
  * regarding the users weight, age etc.
+ *
+ * Author: William Larsson
+ * Course: Development of mobile applications, 5DV209
  */
 public class EditPersonViewModel extends AndroidViewModel {
     private PersonRepository repo;
@@ -20,7 +22,7 @@ public class EditPersonViewModel extends AndroidViewModel {
     public EditPersonViewModel(@NonNull Application app) {
         super(app);
         repo = new PersonRepository(app);
-        personInfo = repo.getLatestPersonEntry();
+        personInfo = repo.getLatestEntry();
     }
 
     // TODO: change the following method names to something more appropriate?

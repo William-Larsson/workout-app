@@ -6,8 +6,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -39,7 +37,7 @@ public class PersonEntity {
      * @param weight = person weight
      * @param isMale = person gender
      * @param dateOfBirth = person date of birth
-     * @param dateOfCreation = date the sbentry was made
+     * @param dateOfCreation = date the entry was made
      */
     public PersonEntity(
             float height,

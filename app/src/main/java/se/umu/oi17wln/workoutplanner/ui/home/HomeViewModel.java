@@ -16,6 +16,7 @@ import se.umu.oi17wln.workoutplanner.model.person.PersonRepository;
  * business logic / model classes.
  *
  * Author: William Larsson
+ * Course: Development of mobile applications, 5DV209
  */
 public class HomeViewModel extends AndroidViewModel {
 

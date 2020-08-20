@@ -16,6 +16,7 @@ import se.umu.oi17wln.workoutplanner.R;
  * date of birth etc.
  *
  * Author: William Larsson
+ * Course: Development of mobile applications, 5DV209
  */
 public class DatePickerDialogFragment
         extends DialogFragment

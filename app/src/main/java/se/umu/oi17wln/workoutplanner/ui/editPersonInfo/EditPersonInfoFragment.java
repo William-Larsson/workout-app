@@ -36,6 +36,7 @@ import se.umu.oi17wln.workoutplanner.model.person.PersonEntity;
  * Updates are written to a shared ViewModel class.
  *
  * Author: William Larsson
+ * Course: Development of mobile applications, 5DV209
  */
 public class EditPersonInfoFragment
         extends Fragment
@@ -222,8 +223,7 @@ public class EditPersonInfoFragment
             float w = Float.parseFloat(weight);
             float h = Float.parseFloat(height);
 
-            String currentDate = new SimpleDateFormat(Util.DATE_FORMAT, Locale.US)
-                    .format(new Date());
+            String currentDate = Util.getCurrentDate();
             PersonEntity dbEntry = new PersonEntity(h, w, isMale, dateOfBirth, currentDate);
             editPersonViewModel.insert(dbEntry);
 
