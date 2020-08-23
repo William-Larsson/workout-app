@@ -2,7 +2,6 @@ package se.umu.oi17wln.workoutplanner.ui.editPersonInfo;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,13 +15,10 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.textfield.TextInputEditText;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import java.util.Locale;
 import java.util.Objects;
 import se.umu.oi17wln.workoutplanner.MainActivity;
@@ -55,7 +51,6 @@ public class EditPersonInfoFragment
     private RadioGroup genderInputGroup;
     private RadioButton maleRadioBtn;
     private RadioButton femaleRadioBtn;
-    private CardView cardView;
 
     /**
      * Create the fragments view and setup methods for
@@ -69,7 +64,8 @@ public class EditPersonInfoFragment
     public View onCreateView(
             @NonNull LayoutInflater inflater,
             ViewGroup container,
-            Bundle savedInstanceState) {
+            Bundle savedInstanceState)
+    {
         fragmentView = inflater.inflate(R.layout.fragment_editpersoninfo, container, false);
 
         editPersonViewModel = new ViewModelProvider(
@@ -181,7 +177,7 @@ public class EditPersonInfoFragment
      */
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.editpersoninfo_menu, menu);
+        inflater.inflate(R.menu.save_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -194,7 +190,7 @@ public class EditPersonInfoFragment
      */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.save_edited_personinfo) {
+        if (item.getItemId() == R.id.save_menu_item) {
             saveData();
             return true;
         } else {

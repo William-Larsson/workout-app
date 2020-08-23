@@ -14,8 +14,11 @@
     <string name="date_of_birth">Date of birth</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
-    <string name="save_edited_personinfo">save_edited_personinfo</string>
+    <string name="save">Save</string>
     <string name="about_you">About you</string>
     <string name="today">Today</string>
     <string name="exercise">Exercise</string>
+    <string name="add_exercise">Add exercise</string>
+    <string name="sets">Sets</string>
+    <string name="reps">Reps</string>
 </resources>

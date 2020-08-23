@@ -45,7 +45,10 @@ public class HomeFragment extends Fragment implements SensorEventListener {
 
     private View fragmentView;
     private EditPersonViewModel editPersonViewModel;
+
+
     // attributes for step counter
+    // TODO: move some of these to view model class
     private static final int STEP_COUNTER_PERMISSION_CODE = 1;
     private SensorManager sensorManager;
     private boolean running;
