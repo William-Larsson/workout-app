@@ -1,5 +1,6 @@
 package se.umu.oi17wln.workoutplanner.model.dailyActivity;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -16,7 +17,9 @@ public class DailyActivityEntity {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
+    @ColumnInfo(defaultValue = "0")
     private int dailyTotalSteps;
+    @ColumnInfo(defaultValue = "0")
     private int totalStepsSinceBoot;
     private String date;
     // TODO: Add daily km, kcal, moved minutes later?

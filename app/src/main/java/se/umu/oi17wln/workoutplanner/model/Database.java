@@ -1,11 +1,16 @@
 package se.umu.oi17wln.workoutplanner.model;
 
 import android.content.Context;
+
+import androidx.annotation.NonNull;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import se.umu.oi17wln.workoutplanner.model.dailyActivity.DailyActivityDao;
 import se.umu.oi17wln.workoutplanner.model.dailyActivity.DailyActivityEntity;
+import se.umu.oi17wln.workoutplanner.model.exercise.ExerciseDao;
+import se.umu.oi17wln.workoutplanner.model.exercise.ExerciseEntity;
 import se.umu.oi17wln.workoutplanner.model.person.PersonDao;
 import se.umu.oi17wln.workoutplanner.model.person.PersonEntity;
 
@@ -16,7 +21,14 @@ import se.umu.oi17wln.workoutplanner.model.person.PersonEntity;
  *
  *  Author: William Larsson
  */
-@androidx.room.Database(entities = {PersonEntity.class, DailyActivityEntity.class}, version = 1)
+@androidx.room.Database(
+        entities = {
+                PersonEntity.class,
+                DailyActivityEntity.class,
+                ExerciseEntity.class
+        },
+        version = 1
+)
 public abstract class Database extends RoomDatabase {
 
     /*
@@ -36,8 +48,9 @@ public abstract class Database extends RoomDatabase {
             dbInstance = Room.databaseBuilder(
                     context.getApplicationContext(),
                     Database.class,
-                    "app_database"
-            ).build();
+                    "app_database")
+                    .addCallback(roomCallback) // TODO: remove when below callback gets removed
+                    .build();
         }
         return dbInstance;
     }
@@ -54,5 +67,38 @@ public abstract class Database extends RoomDatabase {
      * Used to get access to DAO operations
      * @return = DailyActivityDao
      */
-    public abstract DailyActivityDao getExerciseDao();
+    public abstract DailyActivityDao getDailyActivityDao();
+
+
+
+    /**
+     * Used to get access to DAO operations
+     * @return = ExerciseDao
+     */
+    public abstract ExerciseDao getExerciseDao();
+
+
+    // TODO: remove these two below later!!
+
+    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+            new Thread(new PopulateExerciseTableRunnable(dbInstance)).start();
+        }
+    };
+
+    private static class PopulateExerciseTableRunnable implements Runnable {
+        private ExerciseDao dao;
+
+        private PopulateExerciseTableRunnable(Database db){
+            dao = db.getExerciseDao();
+        }
+
+        @Override
+        public void run() {
+            dao.insert(new ExerciseEntity("Example Exercise 1", 3, 8));
+            dao.insert(new ExerciseEntity("Example Exercise 2", 4, 12));
+        }
+    }
 }

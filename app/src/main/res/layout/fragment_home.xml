@@ -7,13 +7,19 @@
     android:orientation="vertical"
     tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/temp_steps"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/value_unknown"/>
+    <include
+        layout="@layout/headline_topic"
+        android:id="@+id/headline_today_container" />
 
-    <include layout="@layout/headline_topic"/>
-    <include layout="@layout/personinfo_cardview" />
+    <include
+        layout="@layout/dailyactivity_cardview"
+        android:id="@+id/dailyactivity_cardview" />
+
+    <include
+        layout="@layout/headline_topic"
+        android:id="@+id/headline_about_container" />
+
+    <include
+        layout="@layout/personinfo_cardview" />
 
 </LinearLayout>

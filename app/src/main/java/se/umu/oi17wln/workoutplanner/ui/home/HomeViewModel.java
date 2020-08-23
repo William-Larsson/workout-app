@@ -4,11 +4,10 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
-import se.umu.oi17wln.workoutplanner.model.person.PersonDao;
-import se.umu.oi17wln.workoutplanner.model.person.PersonEntity;
-import se.umu.oi17wln.workoutplanner.model.person.PersonRepository;
+import se.umu.oi17wln.workoutplanner.model.Util;
+import se.umu.oi17wln.workoutplanner.model.dailyActivity.DailyActivityEntity;
+import se.umu.oi17wln.workoutplanner.model.dailyActivity.DailyActivityRepository;
 
 /**
  * ViewModel for the HomeFragment / landing page.
@@ -19,9 +18,17 @@ import se.umu.oi17wln.workoutplanner.model.person.PersonRepository;
  * Course: Development of mobile applications, 5DV209
  */
 public class HomeViewModel extends AndroidViewModel {
+    private DailyActivityRepository dailyActivityRepo;
+    private LiveData<DailyActivityEntity> currentDailyActivity;
+
+    public HomeViewModel(@NonNull Application app) {
+        super(app);
+        dailyActivityRepo = new DailyActivityRepository(app);
+        currentDailyActivity = dailyActivityRepo.getEntryByDate(Util.getCurrentDate());
+    }
 
 
-    public HomeViewModel(@NonNull Application application) {
-        super(application);
+    public void setCurrentDailyActivity(String date) {
+        currentDailyActivity = dailyActivityRepo.getEntryByDate(date);
     }
 }

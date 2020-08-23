@@ -1,9 +1,8 @@
-package se.umu.oi17wln.workoutplanner.pedometer;
+package se.umu.oi17wln.workoutplanner.model.pedometer;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,6 +15,7 @@ import android.widget.Toast;
  */
 public class BootReceiver extends BroadcastReceiver {
     private static final String TAG_DEVICE_BOOT = "DEVICE_BOOT";
+    private static final int ID_PEDOMETER_JOB = 123;
 
     /**
      * Start the service in the background.
@@ -24,10 +24,14 @@ public class BootReceiver extends BroadcastReceiver {
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG_DEVICE_BOOT, "Device has booted.");
+        Log.d("SERVICE17", "Device has booted.");
+        Toast.makeText(context, "Device has booted.", Toast.LENGTH_SHORT).show();
+
+        // TODO: REMOVE THIS CLASS??
+
         /*
         Toast.makeText(context, "Workout Planner is ready!", Toast.LENGTH_SHORT).show();
-        Intent pedometerIntent = new Intent(context, PedometerListener.class);
+        Intent pedometerIntent = new Intent(context, PedometerService.class);
         if (Build.VERSION.SDK_INT >= 26) {
             context.startForegroundService(pedometerIntent);
         } else context.startService(pedometerIntent);

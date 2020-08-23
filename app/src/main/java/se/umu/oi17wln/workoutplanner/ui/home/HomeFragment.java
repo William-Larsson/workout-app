@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -50,6 +51,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     private boolean running;
     private float totalSteps = 0;
     private float previousStepsSinceBoot = 0;
+    private int sensorHit = 0;
 
     public View onCreateView (
             @NonNull LayoutInflater inflater,
@@ -98,9 +100,9 @@ public class HomeFragment extends Fragment implements SensorEventListener {
 
 
     /**
-     *
-     * @param item
-     * @return
+     * Open fragment for editing the personal info shown.
+     * @param item = the pressed menu item
+     * @return = true if success
      */
     private boolean startEditPersonInfoFragment(MenuItem item) {
         if (item.getItemId() == R.id.edit_personInfo) {
@@ -125,8 +127,14 @@ public class HomeFragment extends Fragment implements SensorEventListener {
      * generic standard text
      */
     private void setupHeadlineTexts() {
-        TextView view = fragmentView.findViewById(R.id.headline);
-        view.setText("About you");
+        //Today section
+        ConstraintLayout todayContainer = fragmentView.findViewById(R.id.headline_today_container);
+        TextView today = todayContainer.findViewById(R.id.headline);
+        today.setText(R.string.today);
+        // About section
+        ConstraintLayout aboutContainer = fragmentView.findViewById(R.id.headline_about_container);
+        TextView about = aboutContainer.findViewById(R.id.headline);
+        about.setText(R.string.about_you);
     }
 
 
@@ -277,8 +285,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
             Toast.makeText(requireContext(), "No step sensor found", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(requireContext(), "Step sensor found", Toast.LENGTH_SHORT).show();
-            // TODO: Check difference between SENSOR_DELAY_UI and its alternatives.
-            sensorManager.registerListener(HomeFragment.this, stepSensor, SensorManager.SENSOR_DELAY_UI);
+            sensorManager.registerListener(HomeFragment.this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
     }
 
@@ -290,13 +297,19 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (running) {
-            totalSteps = event.values[0]; // get current total steps from sensor
-            int currentSteps = (int) totalSteps - (int) previousStepsSinceBoot;
-            TextView textView = fragmentView.findViewById(R.id.temp_steps);
-            textView.setText(String.format(Locale.US, "%d", currentSteps));
+            sensorHit++; // TODO: Why do I get 3 sensor hits before the app has even started?
+            if (sensorHit == 1) {
+                previousStepsSinceBoot = event.values[0];
+            } else if (sensorHit >= 3) {
+                float currentSteps = event.values[0]; // get current total steps from sensor
+                totalSteps += (int) (currentSteps - previousStepsSinceBoot);
+                previousStepsSinceBoot = currentSteps;
+                TextView textView = fragmentView.findViewById(R.id.temp_steps);
+                textView.setText(String.format(Locale.US, "%d %s", (int) totalSteps, " steps "));
+            }
         }
-
     }
+
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {

@@ -4,18 +4,18 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_nav_home"
         android:title="@string/title_home"
         />
 
     <item
-        android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_profile" />
+        android:id="@+id/navigation_workouts"
+        android:icon="@drawable/ic_nav_workouts"
+        android:title="@string/title_workouts" />
 
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_nav_profile"
+        android:title="@string/title_profile" />
 
 </menu>

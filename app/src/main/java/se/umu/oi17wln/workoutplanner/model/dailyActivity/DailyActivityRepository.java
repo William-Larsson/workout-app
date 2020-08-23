@@ -4,7 +4,6 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 import java.util.List;
 import se.umu.oi17wln.workoutplanner.model.Database;
-import se.umu.oi17wln.workoutplanner.model.Util;
 
 /**
  * Class that abstracts data operations to and from the ViewModel
@@ -32,7 +31,7 @@ public class DailyActivityRepository {
      */
     public DailyActivityRepository(Application app) {
         Database db = Database.getInstance(app);
-        dao = db.getExerciseDao();
+        dao = db.getDailyActivityDao();
         // LiveData
         allDailyEntries = dao.getAll();
         latestDailyEntry = dao.getLatestEntry();
