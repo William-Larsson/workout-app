@@ -78,9 +78,16 @@ public abstract class Database extends RoomDatabase {
     public abstract ExerciseDao getExerciseDao();
 
 
-    // TODO: remove these two below later!!
-
+    /**
+     * Callback for Room to instantiate the Exercise table with some
+     * default values.
+     */
     private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
+
+        /**
+         * Populate the db table on a background thread.
+         * @param db = database to insert to
+         */
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
@@ -88,6 +95,9 @@ public abstract class Database extends RoomDatabase {
         }
     };
 
+    /**
+     * Runnable for populating the database table
+     */
     private static class PopulateExerciseTableRunnable implements Runnable {
         private ExerciseDao dao;
 
@@ -95,6 +105,9 @@ public abstract class Database extends RoomDatabase {
             dao = db.getExerciseDao();
         }
 
+        /**
+         * Insert these values to Exercise table using ExerciseDao
+         */
         @Override
         public void run() {
             dao.insert(new ExerciseEntity("Example Exercise 1", 3, 8));

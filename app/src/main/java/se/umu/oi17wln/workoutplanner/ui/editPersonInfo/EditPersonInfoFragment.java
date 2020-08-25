@@ -26,8 +26,7 @@ import se.umu.oi17wln.workoutplanner.R;
 import se.umu.oi17wln.workoutplanner.model.Util;
 import se.umu.oi17wln.workoutplanner.model.person.PersonEntity;
 
-/**
- * A fragment view for updating information about
+/** * A fragment view for updating information about
  * yourself, such as weight, age etc.
  * Updates are written to a shared ViewModel class.
  *
@@ -191,7 +190,10 @@ public class EditPersonInfoFragment
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.save_menu_item) {
-            saveData();
+            boolean dataSaved = saveData();
+            if (dataSaved) {
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -203,7 +205,7 @@ public class EditPersonInfoFragment
      * Saves the user input to the database if all fields are correctly
      * filled.
      */
-    private void saveData(){
+    private boolean saveData(){
         String weight = Objects.requireNonNull(weightInput.getText()).toString();
         String height = Objects.requireNonNull(heightInput.getText()).toString();
         boolean isMale = maleRadioBtn.isChecked();
@@ -215,6 +217,7 @@ public class EditPersonInfoFragment
                     "Please fill in all fields above",
                     Toast.LENGTH_SHORT
             ).show();
+            return false;
         } else {
             float w = Float.parseFloat(weight);
             float h = Float.parseFloat(height);
@@ -222,8 +225,7 @@ public class EditPersonInfoFragment
             String currentDate = Util.getCurrentDate();
             PersonEntity dbEntry = new PersonEntity(h, w, isMale, dateOfBirth, currentDate);
             editPersonViewModel.insert(dbEntry);
-
-            requireActivity().getSupportFragmentManager().popBackStack();
+            return true;
         }
     }
 

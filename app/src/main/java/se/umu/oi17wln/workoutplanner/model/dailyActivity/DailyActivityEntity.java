@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 /**
- * A table representation of exercise measurement during a day.
+ * A table representation of activity measurements during a day.
  * Table is automatically generated because of
  * "@Entity"-tag. Holds values such as total steps, date of creation etc.
  *
@@ -24,6 +24,13 @@ public class DailyActivityEntity {
     private String date;
     // TODO: Add daily km, kcal, moved minutes later?
 
+    /**
+     * Constructor. Does not contain ID because that will
+     * be set by the automatic primary key
+     * @param dailyTotalSteps = steps taken on this day
+     * @param totalStepsSinceBoot = current steps in sensor since boot
+     * @param date = date of steps taken
+     */
     public DailyActivityEntity(
             int dailyTotalSteps,
             int totalStepsSinceBoot,

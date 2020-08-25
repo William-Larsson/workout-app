@@ -8,6 +8,8 @@ import androidx.lifecycle.LiveData;
 import se.umu.oi17wln.workoutplanner.model.Util;
 import se.umu.oi17wln.workoutplanner.model.dailyActivity.DailyActivityEntity;
 import se.umu.oi17wln.workoutplanner.model.dailyActivity.DailyActivityRepository;
+import se.umu.oi17wln.workoutplanner.model.person.PersonEntity;
+import se.umu.oi17wln.workoutplanner.model.person.PersonRepository;
 
 /**
  * ViewModel for the HomeFragment / landing page.
@@ -18,17 +20,26 @@ import se.umu.oi17wln.workoutplanner.model.dailyActivity.DailyActivityRepository
  * Course: Development of mobile applications, 5DV209
  */
 public class HomeViewModel extends AndroidViewModel {
-    private DailyActivityRepository dailyActivityRepo;
-    private LiveData<DailyActivityEntity> currentDailyActivity;
+    private PersonRepository personRepo;
+    private LiveData<PersonEntity> personInfo;
 
+    /**
+     * Constructor, setup repositories for db access and LiveData
+     * @param app = for context
+     */
     public HomeViewModel(@NonNull Application app) {
         super(app);
-        dailyActivityRepo = new DailyActivityRepository(app);
-        currentDailyActivity = dailyActivityRepo.getEntryByDate(Util.getCurrentDate());
+        //dailyActivityRepo = new DailyActivityRepository(app);
+        personRepo = new PersonRepository(app);
+        personInfo = personRepo.getLatestEntry();
     }
 
 
-    public void setCurrentDailyActivity(String date) {
-        currentDailyActivity = dailyActivityRepo.getEntryByDate(date);
+    /**
+     * Get the latest person information
+     * @return = PersonEntity
+     */
+    public LiveData<PersonEntity> getLatestPersonInfo() {
+        return personInfo;
     }
 }

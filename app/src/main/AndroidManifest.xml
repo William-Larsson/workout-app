@@ -15,13 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- Send Boot Completed broadcast to BootReceiver.java -->
-        <receiver android:name=".model.pedometer.BootReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
-
         <!-- Activity -->
         <activity
             android:name=".MainActivity"

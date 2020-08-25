@@ -21,56 +21,63 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:hint="@string/weight"
-                app:boxStrokeColor="@color/colorAccentPrimary"
-                app:errorTextColor="@color/colorAccentRed">
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/user_input_weight"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:digits="0123456789."
-                    android:importantForAutofill="no"
-                    android:inputType="numberDecimal"
-                    android:maxLength="5"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:hint="@string/weight"
+                    app:boxStrokeColor="@color/colorAccentPrimary"
+                    app:errorTextColor="@color/colorAccentRed"
+                    android:layout_weight="1">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:hint="@string/height"
-                app:boxStrokeColor="@color/colorAccentPrimary"
-                app:errorTextColor="@color/colorAccentRed">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/user_input_weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:digits="0123456789."
+                        android:importantForAutofill="no"
+                        android:inputType="numberDecimal"
+                        android:maxLength="5"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/user_input_height"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:digits="0123456789."
-                    android:importantForAutofill="no"
-                    android:inputType="numberDecimal"
-                    android:maxLength="5"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:hint="@string/height"
+                    app:boxStrokeColor="@color/colorAccentPrimary"
+                    app:errorTextColor="@color/colorAccentRed"
+                    android:layout_weight="1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/user_input_height"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:digits="0123456789."
+                        android:importantForAutofill="no"
+                        android:inputType="numberDecimal"
+                        android:maxLength="5"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btn_birthDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="24dp"
                 android:background="@drawable/button_background_accent"
                 android:backgroundTint="@color/colorAccentPrimary"
                 android:paddingTop="14dp"
@@ -90,7 +97,7 @@
                     android:id="@+id/radio_btn_male"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
                     android:layout_weight="1"
@@ -109,9 +116,9 @@
                     android:id="@+id/radio_btn_female"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="24dp"
                     android:layout_marginBottom="16dp"
                     android:layout_weight="1"
                     android:background="@drawable/checkbox_background"

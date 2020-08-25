@@ -38,7 +38,7 @@ public class PedometerWorker extends Worker {
     /**
      * Constructor
       * @param context = context
-     * @param workerParams = ?
+     * @param workerParams
      */
     public PedometerWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);

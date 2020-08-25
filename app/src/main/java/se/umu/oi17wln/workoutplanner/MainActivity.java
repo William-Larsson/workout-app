@@ -33,6 +33,7 @@ import se.umu.oi17wln.workoutplanner.ui.profile.ProfileFragment;
  */
 public class MainActivity extends AppCompatActivity {
     public static final String TAG_EDIT_PERSON_INFO = "se.umu.oi17wln.EDIT_PERSON_INFO";
+    public static final String TAG_ADD_WORKOUT = "se.umu.oi17wln.ADD_WORKOUT";
     private static final String TAG_MAIN_ACTIVITY = "se.umu.oi17wln.MAIN_ACTIVITY";
     private static final String TAG_SAVE_REQUEST = "savePedometerRequest";
     private static final String TAG_SAVE_REQUEST_PERIODIC = "savePedometerRequestPeriodic";

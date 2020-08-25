@@ -23,8 +23,11 @@ public class ExerciseRepository {
     private LiveData<List<ExerciseEntity>> allExercises;
 
     /**
-     * Constructor
-     * @param app = for context
+     * Setup database connection, DAO-operations and
+     * link the LiveData.
+     * Defaults to the current date
+     *
+     * @param app = used for Context.
      */
     public ExerciseRepository(Application app) {
         Database db = Database.getInstance(app);
@@ -32,23 +35,45 @@ public class ExerciseRepository {
         this.allExercises = dao.getAll();
     }
 
+    /**
+     * Insert entry to db on a new thread
+     * @param exerciseEntity = entry to insert
+     */
     public void insert(ExerciseEntity exerciseEntity){
         new Thread(new InsertRunnable(dao, exerciseEntity)).start();
     }
 
 
+    /**
+     * Update an existing entry to db on a new thread
+     * @param exerciseEntity = entry to update (id must match)
+     */
     public void update(ExerciseEntity exerciseEntity){
         new Thread(new UpdateRunnable(dao, exerciseEntity)).start();
     }
 
+
+    /**
+     * Delete given entry in db on a new thread
+     * @param exerciseEntity = entry to delete
+     */
     public void delete(ExerciseEntity exerciseEntity){
         new Thread(new DeleteRunnable(dao, exerciseEntity)).start();
     }
 
+
+    /**
+     * Delete all DailyActivity db entries
+     */
     public void deleteAll(){
         new Thread(new DeleteAllRunnable(dao)).start();
     }
 
+
+    /**
+     * Get all Exercise db entries as LiveData
+     * @return = LiveData with list of all entries
+     */
     public LiveData<List<ExerciseEntity>> getAllExercises(){
         return allExercises;
     }

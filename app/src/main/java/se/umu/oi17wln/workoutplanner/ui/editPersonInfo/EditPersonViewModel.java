@@ -19,19 +19,26 @@ public class EditPersonViewModel extends AndroidViewModel {
     private PersonRepository repo;
     private LiveData<PersonEntity> personInfo;
 
+    /**
+     * Constructor, setup repo and LiveData
+     * @param app = for context
+     */
     public EditPersonViewModel(@NonNull Application app) {
         super(app);
         repo = new PersonRepository(app);
         personInfo = repo.getLatestEntry();
     }
 
-    // TODO: change the following method names to something more appropriate?
     public void insert(PersonEntity personEntity) {
         repo.insert(personEntity);
     }
 
+    public LiveData<PersonEntity> getLatestPersonInfo() {
+        return personInfo;
+    }
 
-    public void update(PersonEntity personEntity){
+
+   /* public void update(PersonEntity personEntity){
         repo.update(personEntity);
     }
 
@@ -43,10 +50,6 @@ public class EditPersonViewModel extends AndroidViewModel {
 
     public void deleteAll(){
         repo.deleteAll();
-    }
+    }*/
 
-
-    public LiveData<PersonEntity> getLatestPersonInfo() {
-        return personInfo;
-    }
 }

@@ -30,11 +30,10 @@ import se.umu.oi17wln.workoutplanner.MainActivity;
 import se.umu.oi17wln.workoutplanner.R;
 import se.umu.oi17wln.workoutplanner.model.person.PersonEntity;
 import se.umu.oi17wln.workoutplanner.ui.editPersonInfo.EditPersonInfoFragment;
-import se.umu.oi17wln.workoutplanner.ui.editPersonInfo.EditPersonViewModel;
 
 /**
  * View class for handling immediate actions related
- * to the GUI-component of this fragment. Updates components
+ * to the GUI-component of this fragment. Updates with components
  * from ViewModel data and executes Android specific
  * operations related to the GUI.
  *
@@ -44,11 +43,11 @@ import se.umu.oi17wln.workoutplanner.ui.editPersonInfo.EditPersonViewModel;
 public class HomeFragment extends Fragment implements SensorEventListener {
 
     private View fragmentView;
-    private EditPersonViewModel editPersonViewModel;
+    private HomeViewModel homeViewModel;
 
 
     // attributes for step counter
-    // TODO: move some of these to view model class
+    // TODO: move some of these to view model class?
     private static final int STEP_COUNTER_PERMISSION_CODE = 1;
     private SensorManager sensorManager;
     private boolean running;
@@ -56,14 +55,22 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     private float previousStepsSinceBoot = 0;
     private int sensorHit = 0;
 
+    /**
+     * View is created, inflate the fragment, set up ViewModel
+     * and Views.
+     * @param inflater = fragment inflater
+     * @param container = not used
+     * @param savedInstanceState = save state
+     * @return = the fragment itself
+     */
     public View onCreateView (
             @NonNull LayoutInflater inflater,
             ViewGroup container,
             Bundle savedInstanceState )
     {
         fragmentView = inflater.inflate(R.layout.fragment_home, container, false);
-        editPersonViewModel = new ViewModelProvider(requireActivity()).get(EditPersonViewModel.class);
-        editPersonViewModel.getLatestPersonInfo()
+        homeViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
+        homeViewModel.getLatestPersonInfo()
                 .observe(getViewLifecycleOwner(), this::updatePersonInfoView);
 
         // for step counter

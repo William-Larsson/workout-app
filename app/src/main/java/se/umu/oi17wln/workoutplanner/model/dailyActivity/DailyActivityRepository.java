@@ -35,35 +35,68 @@ public class DailyActivityRepository {
         // LiveData
         allDailyEntries = dao.getAll();
         latestDailyEntry = dao.getLatestEntry();
-        // dailyEntryByDate = dao.getEntryByDate(Util.getCurrentDate());
     }
 
+    /**
+     * Insert entry to db on a new thread
+     * @param dae = entry to insert
+     */
     public void insert(DailyActivityEntity dae) {
         new Thread(new InsertRunnable(dao, dae)).start();
     }
 
+
+    /**
+     * Update an existing entry to db on a new thread
+     * @param dae = entry to update (id must match)
+     */
     public void update(DailyActivityEntity dae) {
         new Thread(new UpdateRunnable(dao, dae)).start();
     }
 
+
+    /**
+     * Delete given entry in db on a new thread
+     * @param dae = entry to delete
+     */
     public void delete(DailyActivityEntity dae) {
         new Thread(new DeleteRunnable(dao, dae)).start();
     }
 
+
+    /**
+     * Delete all DailyActivity db entries
+     */
     public void deleteAll() {
         new Thread(new DeleteAllRunnable(dao)).start();
     }
 
+
+    /**
+     * Get all DailyActivity db entries as LiveData
+     * @return = LiveData with list of all entries
+     */
     public LiveData<List<DailyActivityEntity>> getAllEntries() {
         return allDailyEntries;
     }
 
+
+    /**
+     * Get the most recent entry
+     * @return = LiveData to entry
+     */
     public LiveData<DailyActivityEntity> getLatestEntry(){
         return latestDailyEntry;
     }
 
-    // TODO: check if this works ?
+
+    /**
+     * Get db entry by given date
+     * @param date = date to get
+     * @return = LiveData of the object
+     */
     public LiveData<DailyActivityEntity> getEntryByDate(String date) {
+        // TODO: check if this works..
         return dao.getEntryByDate(date);
     }
 

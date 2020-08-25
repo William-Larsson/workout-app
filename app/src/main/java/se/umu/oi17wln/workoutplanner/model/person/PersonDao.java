@@ -14,6 +14,7 @@ import java.util.List;
  * abstract access to the application database.
  *
  * Author: William Larsson
+ * Course: Development of mobile applications, 5DV209
  */
 @Dao
 public interface PersonDao {

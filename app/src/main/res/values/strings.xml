@@ -21,4 +21,7 @@
     <string name="add_exercise">Add exercise</string>
     <string name="sets">Sets</string>
     <string name="reps">Reps</string>
+    <string name="delete_all">Delete all</string>
+    <string name="edit_exercise_menu">Edit exercise menu</string>
+    <string name="edit_exercise">Edit exercise</string>
 </resources>

@@ -6,12 +6,11 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
-
 import java.util.List;
 
 /**
  * "Data access object"-class used to access the Room database data
- * for the Exercise-table. Class in an interface to allow for
+ * for the DailyActivity-table. Class in an interface to allow for
  * abstract access to the application database.
  *
  * Author: William Larsson

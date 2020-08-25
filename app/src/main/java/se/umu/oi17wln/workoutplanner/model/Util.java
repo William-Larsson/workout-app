@@ -4,6 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Utility class for accessing global functions
+ * without having to instance an object
+ */
 public class Util {
     public static final String DATE_FORMAT_ABSTRACT = "####-##-##";
     public static final String DATE_FORMAT = "yyyy-MM-dd";
