@@ -18,13 +18,14 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import se.umu.oi17wln.workoutplanner.MainActivity;
 import se.umu.oi17wln.workoutplanner.R;
 import se.umu.oi17wln.workoutplanner.model.exercise.ExerciseEntity;
 
 /**
  *
  */
-public class AddWorkoutFragment extends Fragment {
+public class AddEditWorkoutFragment extends Fragment {
 
     private View fragmentView;
     private AddWorkoutViewModel addWorkoutViewModel;
@@ -48,6 +49,9 @@ public class AddWorkoutFragment extends Fragment {
         fragmentView = inflater.inflate(R.layout.add_workout_fragment, container, false);
         addWorkoutViewModel = new ViewModelProvider(requireActivity()).get(AddWorkoutViewModel.class);
 
+
+        ((MainActivity) requireActivity()).hideBottomNavigationView();
+        setHasOptionsMenu(true);
         setupEditTexts();
 
         return fragmentView;
@@ -85,7 +89,10 @@ public class AddWorkoutFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.save_menu_item) {
-            saveData();
+            boolean dataSaved = saveData();
+            if (dataSaved) {
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -93,7 +100,7 @@ public class AddWorkoutFragment extends Fragment {
     }
 
 
-    private void saveData(){
+    private boolean saveData(){
         String exerciseName = exerciseEditText.getText().toString();
         String nrOfSets = setsEditText.getText().toString();
         String nrOfReps = repsEditText.getText().toString();
@@ -106,12 +113,15 @@ public class AddWorkoutFragment extends Fragment {
                     "Please fill in all fields above",
                     Toast.LENGTH_SHORT
             ).show();
+            return false;
         } else {
             int sets = Integer.parseInt(nrOfSets);
             int reps = Integer.parseInt(nrOfReps);
 
             ExerciseEntity dbEntry = new ExerciseEntity(exerciseName, sets, reps);
             addWorkoutViewModel.insert(dbEntry);
+
+            return true;
         }
     }
 
@@ -125,4 +135,15 @@ public class AddWorkoutFragment extends Fragment {
         repsEditText = fragmentView.findViewById(R.id.user_input_reps);
     }
 
+
+    /**
+     * View is to be destroyed. Show navigation again.
+     */
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (((MainActivity) requireActivity()).getBottomNavigationViewVisibility() == View.GONE){
+            ((MainActivity) requireActivity()).showBottomNavigationView();
+        }
+    }
 }

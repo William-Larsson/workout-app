@@ -29,16 +29,6 @@ public class AddWorkoutViewModel extends AndroidViewModel {
     }
 
 
-    public void delete(ExerciseEntity exerciseEntity){
-        repo.delete(exerciseEntity);
-    }
-
-
-    public void deleteAll(){
-        repo.deleteAll();
-    }
-
-
     public LiveData<List<ExerciseEntity>> getAllExercises(){
         return allExercises;
     }
