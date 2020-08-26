@@ -4,10 +4,8 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
-import se.umu.oi17wln.workoutplanner.model.Util;
-import se.umu.oi17wln.workoutplanner.model.dailyActivity.DailyActivityEntity;
-import se.umu.oi17wln.workoutplanner.model.dailyActivity.DailyActivityRepository;
 import se.umu.oi17wln.workoutplanner.model.person.PersonEntity;
 import se.umu.oi17wln.workoutplanner.model.person.PersonRepository;
 
@@ -22,6 +20,8 @@ import se.umu.oi17wln.workoutplanner.model.person.PersonRepository;
 public class HomeViewModel extends AndroidViewModel {
     private PersonRepository personRepo;
     private LiveData<PersonEntity> personInfo;
+    private MutableLiveData<Integer> totalSteps;
+    private int previousStepsSinceBoot;
 
     /**
      * Constructor, setup repositories for db access and LiveData
@@ -32,6 +32,28 @@ public class HomeViewModel extends AndroidViewModel {
         //dailyActivityRepo = new DailyActivityRepository(app);
         personRepo = new PersonRepository(app);
         personInfo = personRepo.getLatestEntry();
+        totalSteps = new MutableLiveData<>();
+
+    }
+
+
+    /**
+     * Sets previous steps taken from sensor
+     * @param steps = nr of steps taken
+     */
+    public void setPreviousStepsSinceBoot(int steps) {
+        previousStepsSinceBoot = steps;
+    }
+
+
+    /**
+     * Calculate the total of steps taken since app start
+     * @param currentNrOfSteps = updated total of steps since boot
+     */
+    public void calculateTotalSteps(int currentNrOfSteps) {
+        int previousSteps = totalSteps.getValue() != null ? totalSteps.getValue() : 0;
+        int newTotal = currentNrOfSteps - previousStepsSinceBoot + previousSteps;
+        totalSteps.setValue(newTotal);
     }
 
 
@@ -42,4 +64,14 @@ public class HomeViewModel extends AndroidViewModel {
     public LiveData<PersonEntity> getLatestPersonInfo() {
         return personInfo;
     }
+
+
+    /**
+     * Get the latest step count
+     * @return = integer
+     */
+    public LiveData<Integer> getCurrentTotalSteps() {
+        return totalSteps;
+    }
+
 }

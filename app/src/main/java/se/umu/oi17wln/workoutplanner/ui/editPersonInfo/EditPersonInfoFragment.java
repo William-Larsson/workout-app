@@ -94,7 +94,10 @@ public class EditPersonInfoFragment
         if (personEntity != null) {
             weightInput.setText(String.format(Locale.US, Float.toString(personEntity.getWeight())));
             heightInput.setText(String.format(Locale.US, Float.toString(personEntity.getHeight())));
-            maleRadioBtn.setChecked(personEntity.isMale());
+
+            if (personEntity.isMale()) maleRadioBtn.setChecked(true);
+            else femaleRadioBtn.setChecked(true);
+
             String date = personEntity.getDateOfBirth();
 
             if (date != null && !date.trim().isEmpty()){

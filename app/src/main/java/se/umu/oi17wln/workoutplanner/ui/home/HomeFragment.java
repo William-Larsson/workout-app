@@ -41,18 +41,12 @@ import se.umu.oi17wln.workoutplanner.ui.editPersonInfo.EditPersonInfoFragment;
  * Course: Development of mobile applications, 5DV209
  */
 public class HomeFragment extends Fragment implements SensorEventListener {
-
     private View fragmentView;
     private HomeViewModel homeViewModel;
-
-
     // attributes for step counter
-    // TODO: move some of these to view model class?
     private static final int STEP_COUNTER_PERMISSION_CODE = 1;
     private SensorManager sensorManager;
-    private boolean running;
-    private float totalSteps = 0;
-    private float previousStepsSinceBoot = 0;
+    private boolean isResumed;
     private int sensorHit = 0;
 
     /**
@@ -72,6 +66,9 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         homeViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
         homeViewModel.getLatestPersonInfo()
                 .observe(getViewLifecycleOwner(), this::updatePersonInfoView);
+
+        homeViewModel.getCurrentTotalSteps()
+                .observe(getViewLifecycleOwner(), this::updateTotalSteps);
 
         // for step counter
         checkStepCounterPermission();
@@ -185,6 +182,18 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     }
 
 
+    /**
+     * Update the view displaying total steps
+     * when there is new data.
+     * @param integer = the new step count
+     */
+    private void updateTotalSteps(Integer integer) {
+        TextView textView = fragmentView.findViewById(R.id.temp_steps);
+        textView.setText(String.format(Locale.US, "%d %s", integer, " steps"));
+    }
+
+
+
     // -------------------- For the step counter -------------------- //
 
 
@@ -242,9 +251,6 @@ public class HomeFragment extends Fragment implements SensorEventListener {
                                 STEP_COUNTER_PERMISSION_CODE);
                     }
                 })
-                .setNegativeButton("cancel", ((dialog, which) -> {
-                    dialog.dismiss();
-                }))
                 .create()
                 .show();
     }
@@ -287,15 +293,12 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     @Override
     public void onResume() {
         super.onResume();
-        running = true;
-
+        isResumed = true;
         Sensor stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
 
-        if (stepSensor == null) {
-            Toast.makeText(requireContext(), "No step sensor found", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(requireContext(), "Step sensor found", Toast.LENGTH_SHORT).show();
-            sensorManager.registerListener(HomeFragment.this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        if (stepSensor != null) {
+            sensorManager.registerListener(
+                    HomeFragment.this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
     }
 
@@ -306,16 +309,14 @@ public class HomeFragment extends Fragment implements SensorEventListener {
      */
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if (running) {
-            sensorHit++; // TODO: Why do I get 3 sensor hits before the app has even started?
+        if (isResumed) {
+            sensorHit++; // Why do I always get 3 sensor hits before the app has even started?
             if (sensorHit == 1) {
-                previousStepsSinceBoot = event.values[0];
+                homeViewModel.setPreviousStepsSinceBoot((int) event.values[0]);
             } else if (sensorHit >= 3) {
-                float currentSteps = event.values[0]; // get current total steps from sensor
-                totalSteps += (int) (currentSteps - previousStepsSinceBoot);
-                previousStepsSinceBoot = currentSteps;
-                TextView textView = fragmentView.findViewById(R.id.temp_steps);
-                textView.setText(String.format(Locale.US, "%d %s", (int) totalSteps, " steps "));
+                int currentSteps = (int) event.values[0]; // get current total steps from sensor
+                homeViewModel.calculateTotalSteps(currentSteps);
+                homeViewModel.setPreviousStepsSinceBoot(currentSteps);
             }
         }
     }

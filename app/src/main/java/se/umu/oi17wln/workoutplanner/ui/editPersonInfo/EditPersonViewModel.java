@@ -37,19 +37,4 @@ public class EditPersonViewModel extends AndroidViewModel {
         return personInfo;
     }
 
-
-   /* public void update(PersonEntity personEntity){
-        repo.update(personEntity);
-    }
-
-
-    public void delete(PersonEntity personEntity) {
-        repo.delete(personEntity);
-    }
-
-
-    public void deleteAll(){
-        repo.deleteAll();
-    }*/
-
 }
